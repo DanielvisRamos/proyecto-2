@@ -7,13 +7,14 @@ return new class extends Migration {
     public function up(): void {
         // Tabla users (Ajustada a estándar Laravel + rol)
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name'); 
-            $table->string('email')->unique(); 
-            $table->string('password'); 
-            $table->enum('rol', ['administrador', 'emprendedor'])->default('emprendedor'); // Personalizado
-            $table->rememberToken();
-            $table->timestamps();
+            // Columnas básicas
+            $table->id(); // ID único del usuario
+            $table->string('name'); // Nombre completo del usuario
+            $table->string('email')->unique(); // Correo electrónico único
+            $table->string('password'); // Contraseña encriptada
+            $table->enum('role', ['admin', 'entrepreneur'])->default('entrepreneur'); // Rol del usuario
+            $table->rememberToken(); // Token para "Recordar sesión"
+            $table->timestamps(); // created_at y updated_at
         });
 
         // Tabla password_reset_tokens (Estándar Laravel)
@@ -23,7 +24,7 @@ return new class extends Migration {
             $table->timestamp('created_at')->nullable();
         });
 
-        // Tabla sessions (Correcta, sin cambios)
+        // Tabla sessions
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();

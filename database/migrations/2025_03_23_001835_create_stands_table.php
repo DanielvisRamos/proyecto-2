@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stands', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('evento_id')->constrained('eventos')->onDelete('cascade');
-            $table->string('nombre');
-            $table->decimal('precio', 10, 2);
-            $table->enum('estado', ['disponible', 'reservado', 'ocupado'])->default('disponible');
-            $table->timestamps();
+            // Columnas básicas
+            $table->id(); // ID único del stand
+            $table->foreignId('event_id')
+                  ->constrained('events')
+                  ->onDelete('cascade'); // Relación 1:N con eventos
+            $table->string('name'); // Nombre del stand
+            $table->decimal('price', 10, 2); // Precio del stand (ej: 100.50)
+            $table->enum('status', ['available', 'reserved', 'occupied'])->default('available'); // Estado del stand
+            $table->timestamps(); // created_at y updated_at
         });
     }
 
