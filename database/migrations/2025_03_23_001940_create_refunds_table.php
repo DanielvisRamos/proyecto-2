@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('refunds', function (Blueprint $table) {
             // Columnas básicas
             $table->id(); // ID único del reembolso
-            $table->foreignId('payment_id')
-                  ->constrained('payments')
+            $table->foreignId('reservations_id')
+                  ->constrained('reservations')
                   ->unique(); // Relación 1:1 con pagos
             $table->decimal('amount', 10, 2); // Monto reembolsado
             $table->text('reason'); // Razón del reembolso

@@ -15,8 +15,7 @@ return new class extends Migration
             // Columnas básicas
             $table->id(); // ID único del pago
             $table->foreignId('reservation_id')
-                  ->constrained('reservations')
-                  ->unique(); // Relación 1:1 con reservas
+          ->constrained('reservations')->unique(); // 🔐 Relación 1:1
             $table->decimal('amount', 10, 2); // Monto del pago
             $table->string('reference_number'); // Número de referencia
             $table->enum('status', ['pending', 'completed', 'refunded'])->default('pending'); // Estado del pago

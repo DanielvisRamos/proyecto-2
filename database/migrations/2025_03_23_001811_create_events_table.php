@@ -16,9 +16,7 @@ return new class extends Migration
             $table->id(); // ID único del evento
             $table->string('name'); // Nombre del evento
             $table->text('description'); // Descripción detallada
-            $table->foreignId('address_id')
-                  ->constrained('addresses')
-                  ->unique(); // Relación 1:1 con direcciones (un evento tiene una ubicación única)
+            $table->string('address')->nullable();
             $table->dateTime('start_date'); // Fecha de inicio
             $table->dateTime('end_date'); // Fecha de fin
             $table->foreignId('created_by')

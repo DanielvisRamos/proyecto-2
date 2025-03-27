@@ -1,18 +1,23 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    public function up(): void {
+    public function up(): void
+    {
         // Tabla users (Ajustada a estándar Laravel + rol)
         Schema::create('users', function (Blueprint $table) {
             // Columnas básicas
             $table->id(); // ID único del usuario
-            $table->string('name'); // Nombre completo del usuario
+            $table->string('name',50); // Nombre del usuario
+            $table->string('surname',50); // Nombre del usuario
+            $table->string('CI',15)->unique()->comment('Cédula de identidad única');
             $table->string('email')->unique(); // Correo electrónico único
             $table->string('password'); // Contraseña encriptada
-            $table->enum('role', ['admin', 'entrepreneur'])->default('entrepreneur'); // Rol del usuario
+            $table->string('address')->nullable();
+            $table->foreignId('role_id')->constrained('roles')->default(2);
             $table->rememberToken(); // Token para "Recordar sesión"
             $table->timestamps(); // created_at y updated_at
         });
@@ -35,7 +40,8 @@ return new class extends Migration {
         });
     }
 
-    public function down(): void {
+    public function down(): void
+    {
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
